@@ -1,0 +1,24 @@
+{
+  "name": "mathonline",
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces": [
+    "./packages/mo-graphql-api",
+    "./packages/mo-frontend"
+  ],
+  "scripts": {
+    "dev:mo-frontend": "npm run dev --workspace=mo-frontend",
+    "dev:mo-graphql-api": "npm run dev --workspace=mo-graphql-api",
+    "codegen-generate:mo-frontend": "npm run graphql-codegen-generate-client  --workspace=mo-frontend",
+    "codegen-generate:mo-graphql-api": "npm run graphql-codegen-generate-server  --workspace=mo-graphql-api",
+    "dev": "concurrently --names \"Mo-GraphQL-API,Mo-Frontend\" -c \"magenta,blue\" \"npm run dev:mo-graphql-api \" \"wait-on tcp:4000 && npm run dev:mo-frontend \""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.0.1",
+    "dotenv-cli": "^7.4.2",
+    "wait-on": "^8.0.1"
+  }
+}

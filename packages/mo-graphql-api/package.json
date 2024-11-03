@@ -1,0 +1,51 @@
+{
+    "name": "mo-graphql-api",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "npm run load-env-prod -- tsx ./src/index.ts",
+        "start:dev": "npm run load-env-dev -- tsx watch --ignore \"**/node_modules/**\" ./src/index.ts",
+        "dev": "concurrently --names \"Server,Codegen\" \"npm run start:dev \" \"npm run graphql-codegen-generate-server:watch\"",
+        "load-env-prod": "dotenv -e .env.production -e .env.local",
+        "load-env-dev": "dotenv -e .env.development -e .env.local",
+        "load-env-test": "dotenv -e .env.test -e .env.local",
+        "force-init-db": "dotenv -e .env.local -- npx prisma db push",
+        "graphql-codegen-generate-server": "graphql-codegen --config codegen_server.yml",
+        "graphql-codegen-generate-server:watch": "graphql-codegen --watch 'src/**/*.ts' --config codegen_server.yml",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "prisma": {
+        "schema": "./src/api/graphql/datasource/database/schema.prisma"
+    },
+    "prettier": {
+        "trailingComma": "all",
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": false
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@graphql-codegen/cli": "^5.0.2",
+        "@graphql-codegen/typescript": "^4.0.7",
+        "@graphql-codegen/typescript-resolvers": "^4.1.0",
+        "concurrently": "^8.2.2",
+        "dotenv-cli": "^7.4.2",
+        "prisma": "^5.15.0",
+        "tsx": "^4.16.2"
+    },
+    "dependencies": {
+        "@parcel/watcher": "^2.4.1",
+        "@prisma/client": "^5.15.0",
+        "cors": "^2.8.5",
+        "express": "^4.19.2",
+        "graphql": "^16.8.2",
+        "graphql-tag": "^2.12.6",
+        "graphql-yoga": "^5.3.1",
+        "pino": "^9.2.0",
+        "pino-pretty": "^11.2.1",
+        "sharp": "^0.33.4"
+    },
+    "description": ""
+}
