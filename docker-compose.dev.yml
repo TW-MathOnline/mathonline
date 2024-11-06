@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  mo_postgres:
+    image: postgres:latest
+    container_name: mo_postgres_server
+    environment:
+      POSTGRES_USER: mouser
+      POSTGRES_PASSWORD: s3cretpasswd
+      POSTGRES_DB: mathonlinedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    driver: local

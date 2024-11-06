@@ -4,7 +4,9 @@
 
 Run `npm install`
 
-Run `dev-docker-compose -p mathonline_dev up -d`
+To start the postgres server run `docker-compose -f docker-compose.dev.yml -p mathonline up -d`
+-> -f overrides the filename
+-> -p provides the project name
 
 Run `npm run dev`
 
