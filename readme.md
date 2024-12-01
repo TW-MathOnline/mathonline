@@ -4,7 +4,7 @@
 
 Run `npm install`
 
-Run `dev-docker-compose -p mathonline_dev up -d`
+Run `docker-compose -f dev-docker-compose.yml -p mathonline_dev up`
 
 Run `npm run dev`
 
