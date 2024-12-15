@@ -10,7 +10,7 @@
         "load-env-prod": "dotenv -e .env.production -e .env.local",
         "load-env-dev": "dotenv -e .env.development -e .env.local",
         "load-env-test": "dotenv -e .env.test -e .env.local",
-        "force-init-db": "dotenv -e .env.local -- npx prisma db push",
+        "force-init-db": "dotenv -e .env.local -e .env.development -- npx prisma db push",
         "graphql-codegen-generate-server": "graphql-codegen --config codegen_server.yml",
         "graphql-codegen-generate-server:watch": "graphql-codegen --watch 'src/**/*.ts' --config codegen_server.yml",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,6 +30,7 @@
         "@graphql-codegen/cli": "^5.0.2",
         "@graphql-codegen/typescript": "^4.0.7",
         "@graphql-codegen/typescript-resolvers": "^4.1.0",
+        "@types/bcrypt": "^5.0.2",
         "concurrently": "^8.2.2",
         "dotenv-cli": "^7.4.2",
         "prisma": "^5.15.0",
@@ -38,14 +39,17 @@
     "dependencies": {
         "@parcel/watcher": "^2.4.1",
         "@prisma/client": "^5.15.0",
+        "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
         "express": "^4.19.2",
         "graphql": "^16.8.2",
         "graphql-tag": "^2.12.6",
         "graphql-yoga": "^5.3.1",
+        "jsonwebtoken": "^9.0.2",
         "pino": "^9.2.0",
         "pino-pretty": "^11.2.1",
-        "sharp": "^0.33.4"
+        "sharp": "^0.33.4",
+        "zod": "^3.23.8"
     },
     "description": ""
 }

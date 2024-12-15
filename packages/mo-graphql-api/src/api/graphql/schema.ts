@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 import { createSchema } from "graphql-yoga";
 import pino from "pino";
 import { Resolvers } from "../../__generated__/server/resolvers-types";
+import { authMutation, authTypeDef } from "./schema/auth";
 import { dateScalar } from "./schema/shared/dateScalar";
 import { paginationType } from "./schema/shared/pagination";
 import { scalarTypes } from "./schema/shared/scalarTypes";
@@ -10,7 +11,9 @@ import { userTypeDef } from "./schema/user/types";
 
 export const resolvers: Resolvers = {
     Query: { ...userQuery },
-    Mutation: {},
+    Mutation: {
+        ...authMutation,
+    },
     Date: dateScalar,
 };
 
@@ -22,6 +25,7 @@ export const typeDefs = gql`
 
     ${paginationType}
     ${scalarTypes}
+    ${authTypeDef}
 `;
 
 export const schema = createSchema({
@@ -29,6 +33,8 @@ export const schema = createSchema({
     resolvers,
 });
 
+export type Logger = pino.Logger;
+
 export interface ExtendedBaseContext {
-    logger: pino.Logger;
+    logger: Logger;
 }

@@ -18,6 +18,12 @@ export type Scalars = {
   File: { input: File; output: File; }
 };
 
+export type AuthPayload = {
+  __typename?: 'AuthPayload';
+  refreshToken: Scalars['String']['output'];
+  token: Scalars['String']['output'];
+};
+
 export type CreateUserInput = {
   username: Scalars['ID']['input'];
 };
@@ -28,7 +34,20 @@ export type FindUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  login: AuthPayload;
+  refreshToken: AuthPayload;
   register: User;
+};
+
+
+export type MutationLoginArgs = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
+
+export type MutationRefreshTokenArgs = {
+  refreshToken: Scalars['String']['input'];
 };
 
 
@@ -130,6 +149,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  AuthPayload: ResolverTypeWrapper<AuthPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateUserInput: CreateUserInput;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
@@ -145,6 +165,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  AuthPayload: AuthPayload;
   Boolean: Scalars['Boolean']['output'];
   CreateUserInput: CreateUserInput;
   Date: Scalars['Date']['output'];
@@ -158,6 +179,12 @@ export type ResolversParentTypes = {
   User: User;
 };
 
+export type AuthPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = {
+  refreshToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
@@ -167,6 +194,8 @@ export interface FileScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  login?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'password' | 'username'>>;
+  refreshToken?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationRefreshTokenArgs, 'refreshToken'>>;
   register?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'data'>>;
 };
 
@@ -186,6 +215,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type Resolvers<ContextType = any> = {
+  AuthPayload?: AuthPayloadResolvers<ContextType>;
   Date?: GraphQLScalarType;
   File?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
