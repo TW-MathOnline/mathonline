@@ -1,0 +1,15 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "Development Database",
+        "Group": "Servers",
+        "Host": "dev_postgres_server",
+        "Port": 5432,
+        "Username": "admin",
+        "Password": "mypassword",
+        "SSLMode": "prefer",
+        "MaintenanceDB": "mathonlinedb"
+      }
+    }
+  }
+  

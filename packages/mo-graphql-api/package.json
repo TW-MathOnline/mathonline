@@ -13,9 +13,11 @@
         "force-init-db": "dotenv -e .env.local -e .env.development -- npx prisma db push",
         "graphql-codegen-generate-server": "graphql-codegen --config codegen_server.yml",
         "graphql-codegen-generate-server:watch": "graphql-codegen --watch 'src/**/*.ts' --config codegen_server.yml",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev:seed": "npm run load-env-dev -- prisma db seed"
     },
     "prisma": {
+        "seed": "tsx ./src/api/graphql/datasource/seed/seed.ts",
         "schema": "./src/api/graphql/datasource/database/schema.prisma"
     },
     "prettier": {
@@ -31,14 +33,17 @@
         "@graphql-codegen/typescript": "^4.0.7",
         "@graphql-codegen/typescript-resolvers": "^4.1.0",
         "@types/bcrypt": "^5.0.2",
+        "@types/node": "^22.10.2",
         "concurrently": "^8.2.2",
         "dotenv-cli": "^7.4.2",
-        "prisma": "^5.15.0",
-        "tsx": "^4.16.2"
+        "prisma": "^6.0.1",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.2"
     },
     "dependencies": {
         "@parcel/watcher": "^2.4.1",
-        "@prisma/client": "^5.15.0",
+        "@prisma/client": "^6.0.1",
         "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
         "express": "^4.19.2",

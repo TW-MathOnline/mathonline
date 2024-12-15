@@ -1,19 +1,25 @@
 # Mathonline
 
-## Project Setup
+## Initial Project Setup
 
 Ensure that the database has been initialized with the schema. Refer to "How to init database".
 
-Run `docker-compose -f dev-docker-compose.yml -p mathonline_dev up` to start PostgreSQL, pgAdmin
+- Run `docker-compose -f setup/dev-docker-compose.yml -p mathonline_dev up` to start PostgreSQL, pgAdmin
 
-Run `npm install` to install deps
+- Run `npm install` to install deps
 
-Run `npm run dev` to concurrently launch api and webserver.
+- Refer to `How to init database`
+
+- Run `npm run dev` to concurrently launch api and webserver.
 
 ## How to init database
 
 Run `cd mo-graphql-api`
 Run `npm run force-init-db`
+
+Optional:
+
+- Run `dev:seed` to insert development data into db
 
 # Techstack Documentation
 
