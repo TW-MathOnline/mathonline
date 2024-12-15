@@ -11,3 +11,14 @@ model Collection {
   username String @id
   email    String
 }
+
+model User {
+  username String   @id
+  email    String
+  role     UserRole
+}
+
+enum UserRole {
+  BASIC
+  ADVANCED_USER
+}

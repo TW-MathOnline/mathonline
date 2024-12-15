@@ -1,0 +1,10 @@
+.container {
+  padding: 0.5rem;
+  background-color: var(--header-background);
+}
+
+.inner_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
