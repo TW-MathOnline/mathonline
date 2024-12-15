@@ -21,3 +21,9 @@ services:
       - "10002:80" # Maps port 10002 on the host to port 80 on the container
     depends_on:
       - dev_postgres # Ensures pgAdmin starts after PostgreSQL
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin_servers.json:/pgadmin4/servers.json:ro
+
+volumes:
+  pgadmin_data:
