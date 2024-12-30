@@ -3,6 +3,8 @@ import { LOGIN_MUTATION } from "@/app/client/mutation/auth/login";
 import styles from "./loginForm.module.css";
 import { gql, useMutation } from '@apollo/client';
 import { makeClient } from "@/app/client/apolloClient";
+import { setAuthCookies } from "@/app/utils/authUtils";
+import { AuthPayload } from "@/__generated__/client/graphql";
 
 export function LoginForm() {
   async function handleLogin(formdata: FormData) {
@@ -14,8 +16,11 @@ export function LoginForm() {
         password: formdata.get("password") as string,
       },
     });
-
-    console.log(tokens.data?.login.token);
+    
+    setAuthCookies({
+      token: tokens.data?.login.token,
+      refreshToken: tokens.data?.login.refreshToken,
+    } as AuthPayload);
 
   }
 
