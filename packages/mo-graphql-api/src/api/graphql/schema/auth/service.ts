@@ -6,6 +6,7 @@ import { AuthError } from "../../../error/native/authError";
 import { Logger } from "../../schema";
 import { AuthCrud } from "./crud";
 import { generateTokens, verifyRefreshToken } from "./utils/tokenGenerator";
+import ldap from "ldapjs";
 
 const refreshTokenSchema = z.object({
     username: z.string(),
@@ -28,17 +29,50 @@ export class AuthService {
         this.crud = new AuthCrud(logger);
     }
 
+    async authenticateUser(username: string, password: string) {
+        return new Promise((resolve, reject) => {
+            // LDAP server URL
+            const ldapUrl = "ldap://ldap.technikum-wien.at";
+            const client = ldap.createClient({
+                url: ldapUrl,
+            });
+
+            // Bind with user's credentials
+            const dn = `uid=${username},ou=people,dc=technikum-wien,dc=at`;
+            client.bind(dn, password, (err) => {
+                if (err) {
+                    //console.error("LDAP bind failed:", err);
+                    reject("Authentication failed");
+                } else {
+                    //console.log("LDAP bind successful");
+                    resolve("Authentication successful");
+                }
+
+                // Unbind the client to close the connection
+                client.unbind((unbindErr) => {
+                    if (unbindErr) {
+                        //console.error("Error unbinding:", unbindErr);
+                    }
+                });
+            });
+        });
+    }
+
     async login(username: string, password: string): Promise<AuthPayload> {
         try {
             // TO-DO:  CHECK via ldap if given user input is valid if yes then create tokens
 
-            const persistedUser = await prisma.user.findUnique({
-                where: { username },
-            });
+            // Check if the user credentials are correct via ldap
+            await this.authenticateUser(username, password);
+
+            //const persistedUser = await prisma.user.findUnique({
+            //    where: { username },
+            //});
 
             const { token, refreshToken } = generateTokens(
                 username,
-                persistedUser.role,
+                UserRole.BASIC //TODO: read from DB
+                //persistedUser.role,
             );
 
             return { token, refreshToken };
