@@ -1,12 +1,22 @@
 "use client";
+import { LOGIN_MUTATION } from "@/app/client/mutation/auth/login";
 import styles from "./loginForm.module.css";
+import { gql, useMutation } from '@apollo/client';
+import { makeClient } from "@/app/client/apolloClient";
 
 export function LoginForm() {
-  function handleLogin(formdata: FormData) {
-    const username = formdata.get("username");
-    const password = formdata.get("password");
+  async function handleLogin(formdata: FormData) {
 
-    console.log("Username:", username, ", Password:", password);
+    const tokens = await makeClient().mutate({
+      mutation: LOGIN_MUTATION,
+      variables: {
+        username: formdata.get("username") as string,
+        password: formdata.get("password") as string,
+      },
+    });
+
+    console.log(tokens.data?.login.token);
+
   }
 
   return (
