@@ -1,4 +1,3 @@
 **/node_modules**
 /setup/pgadmin_data
 .idea/*
-package-lock.json

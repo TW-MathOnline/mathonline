@@ -29,9 +29,6 @@ export function LoginForm() {
         token: tokens.data.login.token,
         refreshToken: tokens.data.login.refreshToken,
       } as AuthPayload);
-
-      // Optionally, redirect to another page after successful login
-      // e.g., window.location.href = "/dashboard";
     } catch (err) {
       setErrorMessage("Authentication failed. Please check your credentials.");
       console.error("Login error:", err);
@@ -42,7 +39,7 @@ export function LoginForm() {
     <form
       className={styles.form}
       onSubmit={(e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
         const formdata = new FormData(e.target as HTMLFormElement);
         handleLogin(formdata);
       }}

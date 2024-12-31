@@ -75,18 +75,14 @@ export class AuthService {
                     `User ${username} is not authorized to log in.`,
                 );
             }
-
-            //console.log(persistedUser.role );
-
             // Generate tokens using the user's role from the database
             const { token, refreshToken } = generateTokens(
                 username,
-                persistedUser.role as UserRole, // Ensure role is of type UserRole
+                persistedUser.role as UserRole,
             );
 
             return { token, refreshToken };
         } catch (err) {
-            //console.error(err);
             throw new AuthFailedGraphQLError(`Auth failed for ${username}`);
         }
     }
