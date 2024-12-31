@@ -7,6 +7,7 @@ import { Logger } from "../../schema";
 import { AuthCrud } from "./crud";
 import { generateTokens, verifyRefreshToken } from "./utils/tokenGenerator";
 import ldap from "ldapjs";
+import { PrismaClient } from "@prisma/client";
 
 const refreshTokenSchema = z.object({
     username: z.string(),
@@ -60,23 +61,32 @@ export class AuthService {
 
     async login(username: string, password: string): Promise<AuthPayload> {
         try {
-            // TO-DO:  CHECK via ldap if given user input is valid if yes then create tokens
-
             // Check if the user credentials are correct via ldap
             await this.authenticateUser(username, password);
 
-            //const persistedUser = await prisma.user.findUnique({
-            //    where: { username },
-            //});
+            const prisma = new PrismaClient();
 
+            const persistedUser = await prisma.user.findUnique({
+                where: { username },
+            });
+
+            if (!persistedUser) {
+                throw new AuthFailedGraphQLError(
+                    `User ${username} is not authorized to log in.`,
+                );
+            }
+
+            //console.log(persistedUser.role );
+
+            // Generate tokens using the user's role from the database
             const { token, refreshToken } = generateTokens(
                 username,
-                UserRole.BASIC //TODO: read from DB
-                //persistedUser.role,
+                persistedUser.role as UserRole, // Ensure role is of type UserRole
             );
 
             return { token, refreshToken };
         } catch (err) {
+            //console.error(err);
             throw new AuthFailedGraphQLError(`Auth failed for ${username}`);
         }
     }
