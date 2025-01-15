@@ -1,0 +1,17 @@
+.headline {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+}
+
+.list_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.headline p {
+  font-size: 1.2rem;
+  font-weight: bold;
+}

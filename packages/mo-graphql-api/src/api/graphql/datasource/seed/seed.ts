@@ -5,12 +5,24 @@ const prisma = new PrismaClient();
 
 async function main() {
     await prisma.user.deleteMany({});
-    await prisma.user.create({
-        data: {
-            username: safeEnv("MO_DEV_USER_USERNAME"),
-            email: "devuser@gmail.com",
-            role: UserRole.ADVANCED_USER,
-        },
+    await prisma.user.createMany({
+        data: [
+            {
+                username: safeEnv("MO_DEV_USER_USERNAME"),
+                email: "devuser@gmail.com",
+                role: UserRole.ADVANCED_USER,
+            },
+            {
+                username: "Prof. XXX",
+                email: "xxx@gmail.com",
+                role: UserRole.ADVANCED_USER,
+            },
+            {
+                username: "Basic Smiski",
+                email: "basic@gmail.com",
+                role: UserRole.BASIC,
+            },
+        ],
     });
 }
 main()

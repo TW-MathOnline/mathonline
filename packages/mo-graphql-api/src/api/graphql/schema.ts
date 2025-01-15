@@ -6,6 +6,7 @@ import { authMutation, authTypeDef } from "./schema/auth";
 import { dateScalar } from "./schema/shared/dateScalar";
 import { paginationType } from "./schema/shared/pagination";
 import { scalarTypes } from "./schema/shared/scalarTypes";
+import { userMutation } from "./schema/user/mutation";
 import { userQuery } from "./schema/user/query";
 import { userTypeDef } from "./schema/user/types";
 
@@ -13,6 +14,7 @@ export const resolvers: Resolvers = {
     Query: { ...userQuery },
     Mutation: {
         ...authMutation,
+        ...userMutation,
     },
     Date: dateScalar,
 };

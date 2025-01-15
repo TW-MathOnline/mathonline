@@ -1,3 +1,4 @@
+import { UserRole } from '@prisma/client';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
@@ -7,6 +8,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Mayb
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -34,9 +36,16 @@ export type FindUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  deleteUser: User;
   login: AuthPayload;
   refreshToken: AuthPayload;
   register: User;
+  updateUser: User;
+};
+
+
+export type MutationDeleteUserArgs = {
+  username: Scalars['String']['input'];
 };
 
 
@@ -55,6 +64,11 @@ export type MutationRegisterArgs = {
   data: CreateUserInput;
 };
 
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
@@ -64,6 +78,7 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   findUser?: Maybe<User>;
+  users: Array<User>;
 };
 
 
@@ -71,12 +86,20 @@ export type QueryFindUserArgs = {
   data: FindUserInput;
 };
 
+export type UpdateUserInput = {
+  role: UserRole;
+  username: Scalars['String']['input'];
+};
+
 /** A User */
 export type User = {
   __typename?: 'User';
+  role: UserRole;
   /** The id of the user */
   username: Scalars['ID']['output'];
 };
+
+export { UserRole };
 
 
 
@@ -160,7 +183,9 @@ export type ResolversTypes = {
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  UpdateUserInput: UpdateUserInput;
   User: ResolverTypeWrapper<User>;
+  UserRole: UserRole;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -176,6 +201,7 @@ export type ResolversParentTypes = {
   PageInfo: PageInfo;
   Query: {};
   String: Scalars['String']['output'];
+  UpdateUserInput: UpdateUserInput;
   User: User;
 };
 
@@ -194,9 +220,11 @@ export interface FileScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  deleteUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'username'>>;
   login?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'password' | 'username'>>;
   refreshToken?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationRefreshTokenArgs, 'refreshToken'>>;
   register?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'data'>>;
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'data'>>;
 };
 
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
@@ -207,12 +235,16 @@ export type PageInfoResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   findUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryFindUserArgs, 'data'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  role?: Resolver<ResolversTypes['UserRole'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export type UserRoleResolvers = EnumResolverSignature<{ ADVANCED_USER?: any, BASIC?: any }, ResolversTypes['UserRole']>;
 
 export type Resolvers<ContextType = any> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
@@ -222,5 +254,6 @@ export type Resolvers<ContextType = any> = {
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UserRole?: UserRoleResolvers;
 };
 

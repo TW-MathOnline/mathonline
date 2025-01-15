@@ -16,3 +16,5 @@ generates:
             # See more here: https://the-guild.dev/graphql/codegen/plugins/typescript/typescript#inputmaybevalue
             inputMaybeValue: "T | null | undefined"
             # See more here: https://the-guild.dev/graphql/codegen/plugins/typescript/typescript#enumvalues-enumvaluesmap
+            enumValues:
+                UserRole: "@prisma/client#UserRole"
