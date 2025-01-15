@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
+    "\n  mutation Login($username: String!, $password: String!) {\n    login(username: $username, password: $password) {\n      token\n      refreshToken\n    }\n  }\n": types.LoginDocument,
     "\n  mutation RefreshToken($refreshToken: String!) {\n    refreshToken(refreshToken: $refreshToken) {\n      refreshToken\n      token\n    }\n  }\n": types.RefreshTokenDocument,
     "\n  mutation UpdateUser($data: UpdateUserInput!) {\n    updateUser(data: $data) {\n      username\n      role\n    }\n  }\n": types.UpdateUserDocument,
     "\n  mutation DeleteUser($username: String!) {\n    deleteUser(username: $username) {\n      username\n      role\n    }\n  }\n": types.DeleteUserDocument,
@@ -34,6 +35,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation Login($username: String!, $password: String!) {\n    login(username: $username, password: $password) {\n      token\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation Login($username: String!, $password: String!) {\n    login(username: $username, password: $password) {\n      token\n      refreshToken\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

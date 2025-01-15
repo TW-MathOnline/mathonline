@@ -1,5 +1,4 @@
-version: "3.8"
-
+version: '3.8'
 services:
   dev_postgres:
     image: postgres:latest
@@ -9,21 +8,29 @@ services:
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mathonlinedb
     ports:
-      - "10001:5432" # Maps port 10001 on the host to port 5432 on the container
+      - "10001:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: dev_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com # Default pgAdmin login email
-      PGADMIN_DEFAULT_PASSWORD: admin # Default pgAdmin password
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "10002:80" # Maps port 10002 on the host to port 80 on the container
+      - "10002:80"
     depends_on:
-      - dev_postgres # Ensures pgAdmin starts after PostgreSQL
+      - dev_postgres
     volumes:
-      - ./pgadmin_data:/var/lib/pgadmin
-      - ./pgadmin_servers.json:/pgadmin4/servers.json:ro
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin_servers.json:/pgadmin4/servers.json
 
 volumes:
+  pg_data:
   pgadmin_data:

@@ -19,6 +19,7 @@
   "dependencies": {
     "concurrently": "^9.0.1",
     "dotenv-cli": "^7.4.2",
+    "ldapjs": "^3.0.7",
     "wait-on": "^8.0.1"
   }
 }
