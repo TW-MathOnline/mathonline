@@ -11,7 +11,9 @@ const config: CodegenConfig = {
         gqlTagName: "gql",
       },
       config: {
-        scalars: {},
+        scalars: {
+          File: "file",
+        },
       },
     },
   },

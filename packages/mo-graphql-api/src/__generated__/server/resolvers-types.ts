@@ -41,6 +41,7 @@ export type Mutation = {
   refreshToken: AuthPayload;
   register: User;
   updateUser: User;
+  uploadTopicFile: UploadTopicFileDto;
 };
 
 
@@ -69,6 +70,11 @@ export type MutationUpdateUserArgs = {
   data: UpdateUserInput;
 };
 
+
+export type MutationUploadTopicFileArgs = {
+  data: UploadTopicFileInput;
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor?: Maybe<Scalars['String']['output']>;
@@ -89,6 +95,21 @@ export type QueryFindUserArgs = {
 export type UpdateUserInput = {
   role: UserRole;
   username: Scalars['String']['input'];
+};
+
+export type UploadTopicFileDto = {
+  __typename?: 'UploadTopicFileDto';
+  assets: Array<Scalars['File']['output']>;
+  course: Scalars['String']['output'];
+  topic: Scalars['String']['output'];
+  topicFile: Scalars['File']['output'];
+};
+
+export type UploadTopicFileInput = {
+  assets: Array<Scalars['File']['input']>;
+  course: Scalars['String']['input'];
+  topic: Scalars['String']['input'];
+  topicFile: Scalars['File']['input'];
 };
 
 /** A User */
@@ -184,6 +205,8 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UpdateUserInput: UpdateUserInput;
+  UploadTopicFileDto: ResolverTypeWrapper<UploadTopicFileDto>;
+  UploadTopicFileInput: UploadTopicFileInput;
   User: ResolverTypeWrapper<User>;
   UserRole: UserRole;
 };
@@ -202,6 +225,8 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   UpdateUserInput: UpdateUserInput;
+  UploadTopicFileDto: UploadTopicFileDto;
+  UploadTopicFileInput: UploadTopicFileInput;
   User: User;
 };
 
@@ -225,6 +250,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   refreshToken?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationRefreshTokenArgs, 'refreshToken'>>;
   register?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'data'>>;
   updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'data'>>;
+  uploadTopicFile?: Resolver<ResolversTypes['UploadTopicFileDto'], ParentType, ContextType, RequireFields<MutationUploadTopicFileArgs, 'data'>>;
 };
 
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
@@ -236,6 +262,14 @@ export type PageInfoResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   findUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryFindUserArgs, 'data'>>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+};
+
+export type UploadTopicFileDtoResolvers<ContextType = any, ParentType extends ResolversParentTypes['UploadTopicFileDto'] = ResolversParentTypes['UploadTopicFileDto']> = {
+  assets?: Resolver<Array<ResolversTypes['File']>, ParentType, ContextType>;
+  course?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  topic?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  topicFile?: Resolver<ResolversTypes['File'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -253,6 +287,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  UploadTopicFileDto?: UploadTopicFileDtoResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserRole?: UserRoleResolvers;
 };

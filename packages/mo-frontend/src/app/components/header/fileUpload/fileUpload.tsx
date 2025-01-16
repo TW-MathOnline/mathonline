@@ -1,10 +1,16 @@
 "use client";
+import { UPLOAD_TOPIC_FILE_MUTATION } from "@/app/client/mutation/upload/uploadTopicFile";
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import styles from "./fileUpload.module.css";
 
 export function FileUpload(): JSX.Element {
   const [latexFile, setLatexFile] = useState<File | null>(null);
   const [Assets, setAssets] = useState<File[]>([]);
+
+  const [uploadTopicFile, { error: uploadError }] = useMutation(
+    UPLOAD_TOPIC_FILE_MUTATION
+  );
 
   const handleLatexFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -27,6 +33,17 @@ export function FileUpload(): JSX.Element {
     const semester = formData.get("semester") as string;
     const verband = formData.get("verband") as string;
     const lehrveranstaltung = formData.get("lehrveranstaltung") as string;
+
+    await uploadTopicFile({
+      variables: {
+        data: {
+          course: semester,
+          topic: "UNKNOWN_TOPIC",
+          assets: Assets,
+          topicFile: latexFile,
+        },
+      },
+    });
 
     const x = {
       latexfile,
@@ -63,6 +80,7 @@ export function FileUpload(): JSX.Element {
   return (
     <form className={styles.form} onSubmit={handleUpload}>
       <h1 className={styles.h1}>Datei Upload</h1>
+      <p>{uploadError?.message}</p>
 
       {/* Dropdown container */}
       <div className={styles.dropdownContainer}>
