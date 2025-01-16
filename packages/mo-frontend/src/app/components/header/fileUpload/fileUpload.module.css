@@ -1,0 +1,127 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.h1 {
+    font-size: 2.5rem;
+    color: #4A90E2;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.dropdownContainer {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.dropdownContainer label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4A90E2;
+    margin-right: 5px;
+}
+
+.dropdownContainer select {
+    width: 150px;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.dropdownContainer select:focus {
+    border-color: #4A90E2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.8);
+    outline: none;
+}
+
+.uploadContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 100px;
+}
+
+.uploadField {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #4A90E2;
+    border-radius: 8px;
+    padding: 25px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.uploadField:hover {
+    background-color: #f0faff;
+    border-color: #357ABD;
+}
+
+.uploadField input[type="file"] {
+    display: none;
+}
+
+.uploadField label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #4A90E2;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.uploadField label:hover {
+    background-color: #357ABD;
+}
+
+.uploadField p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    font-weight: 400;
+}
+
+.button {
+    margin-top: 30px;
+    padding: 12px 30px;
+    background-color: #4A90E2;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.button:hover {
+    background-color: #357ABD;
+}
+
+.button:active {
+    transform: scale(0.98);
+}
