@@ -5,7 +5,7 @@ export function Profile() {
   const decodedUser = useDecodedToken(COOKIE_KEY_USER_TOKEN);
   return (
     <div>
-      <span>Welcome back, {decodedUser?.username}</span>
+      {decodedUser?.username && (<span>Welcome back, {decodedUser.username}</span>)}
     </div>
   );
 }
