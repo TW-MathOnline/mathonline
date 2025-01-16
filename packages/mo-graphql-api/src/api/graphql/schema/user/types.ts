@@ -7,6 +7,12 @@ export const userTypeDef = gql`
     type User {
         "The id of the user"
         username: ID!
+        role: UserRole!
+    }
+
+    enum UserRole {
+        BASIC
+        ADVANCED_USER
     }
 
     input FindUserInput {
@@ -17,11 +23,19 @@ export const userTypeDef = gql`
         username: ID!
     }
 
+    input UpdateUserInput {
+        username: String!
+        role: UserRole!
+    }
+
     extend type Query {
         findUser(data: FindUserInput!): User
+        users: [User!]!
     }
 
     extend type Mutation {
         register(data: CreateUserInput!): User!
+        updateUser(data: UpdateUserInput!): User!
+        deleteUser(username: String!): User!
     }
 `;

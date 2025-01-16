@@ -17,7 +17,7 @@
         "dev:seed": "npm run load-env-dev -- prisma db seed"
     },
     "prisma": {
-        "seed": "tsx ./src/api/graphql/datasource/seed/seed.ts",
+        "seed": "npm run load-env-dev -- tsx ./src/api/graphql/datasource/seed/seed.ts",
         "schema": "./src/api/graphql/datasource/database/schema.prisma"
     },
     "prettier": {
