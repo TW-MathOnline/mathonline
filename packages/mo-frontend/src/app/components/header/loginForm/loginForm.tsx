@@ -1,10 +1,11 @@
 "use client";
-import { LOGIN_MUTATION } from "@/app/client/mutation/auth/login";
-import styles from "./loginForm.module.css";
-import { makeClient } from "@/app/client/apolloClient";
-import { setAuthCookies } from "@/app/utils/authUtils";
 import { AuthPayload } from "@/__generated__/client/graphql";
+import { makeClient } from "@/app/client/apolloClient";
+import { LOGIN_MUTATION } from "@/app/client/mutation/auth/login";
+import { setAuthCookies } from "@/app/utils/authUtils";
+import { redirect } from "next/navigation";
 import { useState } from "react";
+import styles from "./loginForm.module.css";
 
 export function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,6 +30,7 @@ export function LoginForm() {
         token: tokens.data.login.token,
         refreshToken: tokens.data.login.refreshToken,
       } as AuthPayload);
+      redirect("/");
     } catch (err) {
       setErrorMessage("Authentication failed. Please check your credentials.");
       console.error("Login error:", err);

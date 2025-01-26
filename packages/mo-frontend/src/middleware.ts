@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { makeClient } from "./app/client/apolloClient";
 import { REFRESH_TOKEN_MUTATION } from "./app/client/mutation/auth/refreshToken";
 import { logger } from "./app/config/logger";
@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
   if (pathname !== "/login" && !pathname.startsWith("/_next")) {
     const isAuthenticated = true;
     if (!isAuthenticated) {
-      return Response.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   }
 }
