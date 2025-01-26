@@ -30,14 +30,12 @@ export function FileUpload(): JSX.Element {
     const formData = new FormData(event.currentTarget);
     const latexfile = latexFile;
     const assets = Assets;
-    const semester = formData.get("semester") as string;
-    const verband = formData.get("verband") as string;
-    const lehrveranstaltung = formData.get("lehrveranstaltung") as string;
+    const topic = formData.get("topic") as string;
 
     await uploadTopicFile({
       variables: {
         data: {
-          course: semester,
+          course: topic,
           topic: "UNKNOWN_TOPIC",
           assets: Assets,
           topicFile: latexFile,
@@ -48,12 +46,10 @@ export function FileUpload(): JSX.Element {
     const x = {
       latexfile,
       assets,
-      semester,
-      verband,
-      lehrveranstaltung,
+      topic,
     };
 
-    console.log("Uploaded files and selections:", x);
+    console.log("Uploaded files and topic:", x);
   }
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -84,33 +80,13 @@ export function FileUpload(): JSX.Element {
 
       {/* Dropdown container */}
       <div className={styles.dropdownContainer}>
-        {/* Semester Dropdown */}
+        {/* topic Dropdown */}
         <div className={styles.dropdown}>
-          <label htmlFor="semester">Semester:</label>
-          <select name="semester" id="semester">
-            <option value="Sem1">Semester 1</option>
-            <option value="Sem2">Semester 2</option>
-            <option value="Sem3">Semester 3</option>
-          </select>
-        </div>
-
-        {/* Verband Dropdown */}
-        <div className={styles.dropdown}>
-          <label htmlFor="verband">Verband:</label>
-          <select name="verband" id="verband">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-          </select>
-        </div>
-
-        {/* Lehrveranstaltung Dropdown */}
-        <div className={styles.dropdown}>
-          <label htmlFor="lehrveranstaltung">Lehrveranstaltung:</label>
-          <select name="lehrveranstaltung" id="lehrveranstaltung">
-            <option value="MACS1">MACS1</option>
-            <option value="MACS2">MACS2</option>
-            <option value="Andere">Andere</option>
+          <label htmlFor="topic">Choose Topic</label>
+          <select name="topic" id="topic">
+            <option value="graphs">Graphen</option>
+            <option value="matrices">Matrizen</option>
+            <option value="statistics">Statistik</option>
           </select>
         </div>
       </div>
