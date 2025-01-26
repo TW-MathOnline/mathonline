@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   if (pathname !== "/login" && !pathname.startsWith("/_next")) {
-    const isAuthenticated = true;
+    const isAuthenticated = await isUserAuthenticated(request);
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
